@@ -1,5 +1,6 @@
 'use client';
 
+// Riftdle - League of Legends guessing game
 import { useState, useEffect } from 'react';
 import { getAllChampions } from '@/utils/riotApi';
 import { Champion } from '@/types/champion';
