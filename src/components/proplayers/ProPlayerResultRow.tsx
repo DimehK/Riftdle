@@ -42,24 +42,7 @@ export default function ProPlayerResultRow({ guess, answer }: Props) {
   const startYearComp = compareYear(guess.startYear, answer.startYear);
   const birthYearComp = compareBirthYear(guess.birthYear, answer.birthYear);
 
-  // Si c'est la bonne réponse
-  if (isCorrect) {
-    return (
-      <div className="bg-gradient-to-r from-pink-400 to-purple-600 rounded-2xl p-6 shadow-lg animate-pulse">
-        <div className="flex items-center gap-4 text-white">
-          <div className="text-5xl">⭐</div>
-          <div>
-            <div className="text-3xl font-bold">{guess.ign}</div>
-            <div className="text-xl opacity-90">{guess.realName}</div>
-            <div className="text-sm opacity-75">{guess.role} • {guess.team || guess.league}</div>
-          </div>
-          <div className="ml-auto text-5xl">🎉</div>
-        </div>
-      </div>
-    );
-  }
-
-  // Affichage normal - 8 colonnes
+  // Affichage normal - 8 colonnes (aussi pour les bonnes réponses)
   return (
     <div className="grid grid-cols-8 gap-2 p-2">
       {/* 1. Player */}

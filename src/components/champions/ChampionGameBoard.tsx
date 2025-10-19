@@ -56,7 +56,7 @@ export default function ChampionGameBoard({ champions }: Props) {
     if (isGameWon && !gaveUp) {
       const timer = setTimeout(() => {
         setShowCelebration(true);
-      }, 1500); // 1.5 second delay to show the green row first
+      }, 2100); // Wait for last field animation (2s) + 0.1s delay
       return () => clearTimeout(timer);
     } else if (gaveUp) {
       setShowCelebration(true);

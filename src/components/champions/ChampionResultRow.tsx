@@ -39,27 +39,7 @@ export default function ChampionResultRow({ guess, answer }: Props) {
 
   const yearComp = compareYear(guess.releaseYear, answer.releaseYear);
 
-  // Si c'est la bonne réponse
-  if (isCorrect) {
-    return (
-      <div className="bg-gradient-to-r from-green-400 to-green-600 rounded-2xl p-6 shadow-lg animate-pulse">
-        <div className="flex items-center gap-4 text-white">
-          <img
-            src={getChampionImageUrl(guess.id)}
-            alt={guess.name}
-            className="w-20 h-20 rounded-xl border-4 border-white shadow-lg"
-          />
-          <div>
-            <div className="text-3xl font-bold">{guess.name}</div>
-            <div className="text-xl opacity-90">{guess.title}</div>
-          </div>
-          <div className="ml-auto text-5xl">🎉</div>
-        </div>
-      </div>
-    );
-  }
-
-  // Affichage normal - 8 colonnes
+  // Affichage normal - 8 colonnes (aussi pour les bonnes réponses)
   return (
     <div className="grid grid-cols-8 gap-2 p-2">
       {/* 1. Champion */}
