@@ -8,7 +8,7 @@ interface Props {
 export default function ModeSelector({ currentMode, onModeChange }: Props) {
   return (
     <div className="flex flex-col items-center gap-4 mb-8">
-      <h2 className="text-white text-2xl font-bold">Choose Game Mode</h2>
+      <h2 className="text-white text-2xl font-bold" style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.9)' }}>Choose Game Mode</h2>
       <div className="flex gap-4 flex-wrap justify-center">
         {/* Mode Champions */}
         <button

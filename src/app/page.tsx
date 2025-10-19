@@ -79,23 +79,17 @@ export default function Home() {
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
-        <header className="text-center mb-8 md:mb-12 px-4">
-          <div className="flex justify-center mb-4">
+        <header className="text-center mb-4 px-4">
+          <div className="flex justify-center">
             <img
               src="/riftdle-logo.png"
               alt="Riftdle"
-              className="h-72 md:h-96 w-auto transition-transform duration-300 hover:scale-110 cursor-pointer"
+              className="h-80 md:h-[500px] w-auto transition-transform duration-300 hover:scale-110 cursor-pointer"
               style={{
                 filter: 'drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.9))'
               }}
             />
           </div>
-          <p className="text-base md:text-xl text-white font-semibold"
-             style={{
-               textShadow: '2px 2px 4px rgba(0, 0, 0, 0.9)'
-             }}>
-            Guess the champion based on gender, position, species, range, region, and release year
-          </p>
         </header>
 
         {/* Sélecteur de mode */}
