@@ -124,20 +124,6 @@ export default function ChampionGameBoard({ champions }: Props) {
         </div>
       )}
 
-      {/* Aide après 10 essais */}
-      {!isGameWon && guesses.length >= 10 && (
-        <div className="bg-black/40 backdrop-blur-md border-2 border-white/20 rounded-2xl p-6 text-center">
-          <p className="text-xl text-white mb-4">
-            Having trouble? The answer is <span className="font-bold">{currentChampion.name}</span>!
-          </p>
-          <button
-            onClick={startNewGame}
-            className="px-6 py-3 bg-black/50 backdrop-blur-md border-2 border-white/30 text-white rounded-xl hover:border-blue-400 font-bold"
-          >
-            Try Another Champion
-          </button>
-        </div>
-      )}
 
       {/* Input de devinette */}
       {!isGameWon && (

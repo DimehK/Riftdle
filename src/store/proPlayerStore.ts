@@ -94,6 +94,7 @@ export const useProPlayerStore = create<ProPlayerStore>()(
           guesses: [],
           isGameWon: false,
           gaveUp: false,
+          dailyCompleted: false,
           totalGamesPlayed: state.totalGamesPlayed + 1,
         }));
       },

@@ -27,30 +27,19 @@ export default function ProPlayerGameBoard() {
   const [initialized, setInitialized] = useState(false);
   const [revealedLetters, setRevealedLetters] = useState(0);
 
-  // Démarrer une nouvelle partie (disabled in daily mode)
+  // Démarrer une nouvelle partie
   const startNewGame = () => {
-    // Daily mode: can't start new game until next day
-    return;
+    const randomPlayer = proPlayers[Math.floor(Math.random() * proPlayers.length)];
+    resetGame();
+    setCurrentPlayer(randomPlayer);
+    setRevealedLetters(0);
   };
 
   // Initialiser le jeu au chargement (une seule fois)
   useEffect(() => {
-    if (!initialized && proPlayers.length > 0) {
-      // Check if we need to reset for a new day
-      checkAndResetDaily();
-
-      // If no daily player set, pick a new one
-      if (!dailyPlayerId) {
-        const randomPlayer = proPlayers[Math.floor(Math.random() * proPlayers.length)];
-        setCurrentPlayer(randomPlayer);
-        setDailyPlayer(randomPlayer.id);
-      } else if (!currentPlayer) {
-        // Find and set the daily player
-        const dailyPlayer = proPlayers.find(p => p.id === dailyPlayerId);
-        if (dailyPlayer) {
-          setCurrentPlayer(dailyPlayer);
-        }
-      }
+    if (!initialized && !currentPlayer && proPlayers.length > 0) {
+      const randomPlayer = proPlayers[Math.floor(Math.random() * proPlayers.length)];
+      setCurrentPlayer(randomPlayer);
       setInitialized(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -119,32 +108,24 @@ export default function ProPlayerGameBoard() {
                 </p>
               </div>
             )}
-            <div className="mt-8 px-8 py-4 bg-black/50 backdrop-blur-md border-2 border-white/30 text-white text-xl rounded-2xl font-bold shadow-xl">
-              Come back tomorrow at 1pm CET for a new player!
-            </div>
+            <button
+              onClick={startNewGame}
+              className="mt-8 px-8 py-4 bg-black/50 backdrop-blur-md border-2 border-white/30 text-white text-xl rounded-2xl hover:border-blue-400 font-bold shadow-xl transform transition-transform hover:scale-105"
+            >
+              Play Again
+            </button>
           </div>
         </div>
       )}
 
-      {/* Aide après 10 essais */}
-      {!isGameWon && guesses.length >= 10 && (
-        <div className="bg-black/40 backdrop-blur-md border-2 border-white/20 rounded-2xl p-6 text-center">
-          <p className="text-xl text-white mb-4">
-            Having trouble? The answer is <span className="font-bold">{currentPlayer.ign}</span>!
-          </p>
-          <div className="px-6 py-3 bg-black/50 backdrop-blur-md border-2 border-white/30 text-white rounded-xl font-bold">
-            Come back tomorrow at 1pm CET for a new player!
-          </div>
-        </div>
-      )}
 
       {/* Input de devinette */}
-      {!isGameWon && !dailyCompleted && (
+      {!isGameWon && (
         <>
           <ProPlayerGuessInput
             proPlayers={proPlayers}
             onGuess={handleGuess}
-            disabled={isGameWon || dailyCompleted}
+            disabled={isGameWon}
             guessedPlayers={guessedPlayerIds}
           />
 
@@ -194,6 +175,12 @@ export default function ProPlayerGameBoard() {
             className="px-6 py-3 bg-black/40 backdrop-blur-md border-2 border-white/20 text-white rounded-xl hover:border-blue-400 font-bold shadow-lg"
           >
             😔 Give Up
+          </button>
+          <button
+            onClick={startNewGame}
+            className="px-6 py-3 bg-black/40 backdrop-blur-md border-2 border-white/20 text-white rounded-xl hover:border-blue-400 font-bold shadow-lg"
+          >
+            🔄 Skip to New Game
           </button>
         </div>
       )}

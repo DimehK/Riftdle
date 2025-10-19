@@ -43,6 +43,7 @@ export const championReleaseYears: Record<string, number> = {
 
   // 2010
   'Katarina': 2010,
+  'Shen': 2010,
   'Akali': 2010,
   'Kennen': 2010,
   'Garen': 2010,
