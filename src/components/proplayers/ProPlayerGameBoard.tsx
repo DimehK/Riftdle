@@ -70,8 +70,10 @@ export default function ProPlayerGameBoard() {
   const getHint = () => {
     if (!currentPlayer || isGameWon || revealedLetters === 0) return null;
 
-    const hint = currentPlayer.ign.substring(0, revealedLetters);
-    const remaining = currentPlayer.ign.length - revealedLetters;
+    // Cap revealed letters at the name length
+    const maxReveals = Math.min(revealedLetters, currentPlayer.ign.length);
+    const hint = currentPlayer.ign.substring(0, maxReveals);
+    const remaining = Math.max(0, currentPlayer.ign.length - maxReveals);
 
     return {
       letters: hint,
@@ -130,13 +132,13 @@ export default function ProPlayerGameBoard() {
           />
 
           {/* Hint System */}
-          {guesses.length >= 3 && revealedLetters < (guesses.length - 2) && (
+          {guesses.length >= 3 && revealedLetters < (guesses.length - 2) && revealedLetters < currentPlayer.ign.length && (
             <div className="text-center">
               <button
                 onClick={() => setRevealedLetters(prev => prev + 1)}
                 className="px-6 py-3 bg-black/40 backdrop-blur-md border-2 border-yellow-400 text-yellow-300 rounded-xl hover:border-yellow-500 hover:bg-yellow-400/20 font-bold shadow-lg transition-all duration-500"
               >
-                💡 Reveal Next Letter ({revealedLetters}/{guesses.length - 2})
+                💡 Reveal Next Letter ({revealedLetters}/{Math.min(guesses.length - 2, currentPlayer.ign.length)})
               </button>
             </div>
           )}

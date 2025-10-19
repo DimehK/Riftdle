@@ -69,8 +69,10 @@ export default function ChampionGameBoard({ champions }: Props) {
   const getHint = () => {
     if (!currentChampion || isGameWon || revealedLetters === 0) return null;
 
-    const hint = currentChampion.name.substring(0, revealedLetters);
-    const remaining = currentChampion.name.length - revealedLetters;
+    // Cap revealed letters at the name length
+    const maxReveals = Math.min(revealedLetters, currentChampion.name.length);
+    const hint = currentChampion.name.substring(0, maxReveals);
+    const remaining = Math.max(0, currentChampion.name.length - maxReveals);
 
     return {
       letters: hint,
@@ -136,13 +138,13 @@ export default function ChampionGameBoard({ champions }: Props) {
           />
 
           {/* Hint System */}
-          {guesses.length >= 3 && revealedLetters < (guesses.length - 2) && (
+          {guesses.length >= 3 && revealedLetters < (guesses.length - 2) && revealedLetters < currentChampion.name.length && (
             <div className="text-center">
               <button
                 onClick={() => setRevealedLetters(prev => prev + 1)}
                 className="px-6 py-3 bg-black/40 backdrop-blur-md border-2 border-yellow-400 text-yellow-300 rounded-xl hover:border-yellow-500 hover:bg-yellow-400/20 font-bold shadow-lg transition-all duration-500"
               >
-                💡 Reveal Next Letter ({revealedLetters}/{guesses.length - 2})
+                💡 Reveal Next Letter ({revealedLetters}/{Math.min(guesses.length - 2, currentChampion.name.length)})
               </button>
             </div>
           )}
