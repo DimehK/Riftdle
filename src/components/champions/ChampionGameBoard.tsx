@@ -25,6 +25,7 @@ export default function ChampionGameBoard({ champions }: Props) {
 
   const [initialized, setInitialized] = useState(false);
   const [revealedLetters, setRevealedLetters] = useState(0);
+  const [showCelebration, setShowCelebration] = useState(false);
 
   // Démarrer une nouvelle partie
   const startNewGame = () => {
@@ -32,6 +33,7 @@ export default function ChampionGameBoard({ champions }: Props) {
     resetGame();
     setCurrentChampion(randomChamp);
     setRevealedLetters(0);
+    setShowCelebration(false);
   };
 
   // Initialiser le jeu au chargement (une seule fois)
@@ -48,6 +50,18 @@ export default function ChampionGameBoard({ champions }: Props) {
   const handleGuess = (champion: Champion) => {
     addGuess(champion);
   };
+
+  // Show celebration after delay when game is won
+  useEffect(() => {
+    if (isGameWon && !gaveUp) {
+      const timer = setTimeout(() => {
+        setShowCelebration(true);
+      }, 1500); // 1.5 second delay to show the green row first
+      return () => clearTimeout(timer);
+    } else if (gaveUp) {
+      setShowCelebration(true);
+    }
+  }, [isGameWon, gaveUp]);
 
   // Abandonner
   const handleGiveUp = () => {
@@ -85,7 +99,7 @@ export default function ChampionGameBoard({ champions }: Props) {
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-8">
       {/* Zone de victoire */}
-      {isGameWon && currentChampion && (
+      {isGameWon && currentChampion && showCelebration && (
         <div className="relative overflow-hidden rounded-3xl shadow-2xl">
           <div
             className="absolute inset-0 bg-cover bg-center"

@@ -26,6 +26,7 @@ export default function ProPlayerGameBoard() {
   const proPlayers = getAllProPlayers();
   const [initialized, setInitialized] = useState(false);
   const [revealedLetters, setRevealedLetters] = useState(0);
+  const [showCelebration, setShowCelebration] = useState(false);
 
   // Démarrer une nouvelle partie
   const startNewGame = () => {
@@ -33,6 +34,7 @@ export default function ProPlayerGameBoard() {
     resetGame();
     setCurrentPlayer(randomPlayer);
     setRevealedLetters(0);
+    setShowCelebration(false);
   };
 
   // Initialiser le jeu au chargement (une seule fois)
@@ -49,6 +51,18 @@ export default function ProPlayerGameBoard() {
   const handleGuess = (player: ProPlayer) => {
     addGuess(player);
   };
+
+  // Show celebration after delay when game is won
+  useEffect(() => {
+    if (isGameWon && !gaveUp) {
+      const timer = setTimeout(() => {
+        setShowCelebration(true);
+      }, 1500); // 1.5 second delay to show the green row first
+      return () => clearTimeout(timer);
+    } else if (gaveUp) {
+      setShowCelebration(true);
+    }
+  }, [isGameWon, gaveUp]);
 
   // Abandonner
   const handleGiveUp = () => {
@@ -86,7 +100,7 @@ export default function ProPlayerGameBoard() {
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-8">
       {/* Zone de victoire */}
-      {isGameWon && currentPlayer && (
+      {isGameWon && currentPlayer && showCelebration && (
         <div className="relative overflow-hidden rounded-3xl shadow-2xl bg-black/50 backdrop-blur-md border-2 border-white/20">
           <div className="relative z-10 p-12 text-center space-y-6">
             {!gaveUp && <div className="text-6xl mb-4">🎉</div>}
