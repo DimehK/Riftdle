@@ -80,13 +80,16 @@ export default function Home() {
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <header className="text-center mb-8 md:mb-12 px-4">
-          <h1 className="text-5xl md:text-8xl font-bold mb-4 text-white"
+          <div className="flex justify-center mb-4">
+            <img
+              src="/riftdle-logo.png"
+              alt="Riftdle"
+              className="h-24 md:h-40 w-auto transition-transform duration-300 hover:scale-110 cursor-pointer"
               style={{
-                textShadow: '4px 4px 0px #000000, -2px -2px 0px #000000, 2px -2px 0px #000000, -2px 2px 0px #000000',
-                letterSpacing: '0.1em'
-              }}>
-            RIFTDLE
-          </h1>
+                filter: 'drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.9))'
+              }}
+            />
+          </div>
           <p className="text-base md:text-xl text-white font-semibold"
              style={{
                textShadow: '2px 2px 4px rgba(0, 0, 0, 0.9)'
