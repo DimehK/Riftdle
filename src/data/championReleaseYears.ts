@@ -198,4 +198,8 @@ export const championReleaseYears: Record<string, number> = {
   'Smolder': 2024,
   'Aurora': 2024,
   'Ambessa': 2024,
+
+  // 2025
+  'Mel': 2025,
+  'Yunara': 2025,
 };

@@ -83,11 +83,15 @@ export const useProPlayerStore = create<ProPlayerStore>()(
       },
 
       resetGame: () => {
-        const { isGameWon } = get();
+        const { isGameWon, gaveUp } = get();
 
-        if (!isGameWon) {
+        // Si abandon ou perte, reset winstreak
+        if (!isGameWon || gaveUp) {
           get().resetWinstreak();
         }
+
+        // Incrémenter totalGamesPlayed seulement si le jeu était actif (au moins 1 essai)
+        const shouldCountGame = get().guesses.length > 0;
 
         set((state) => ({
           currentPlayer: null,
@@ -95,7 +99,7 @@ export const useProPlayerStore = create<ProPlayerStore>()(
           isGameWon: false,
           gaveUp: false,
           dailyCompleted: false,
-          totalGamesPlayed: state.totalGamesPlayed + 1,
+          totalGamesPlayed: shouldCountGame ? state.totalGamesPlayed + 1 : state.totalGamesPlayed,
         }));
       },
 

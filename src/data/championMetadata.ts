@@ -14,6 +14,7 @@ interface ChampionMetadata {
 export const championMetadata: Record<string, ChampionMetadata> = {
   // A
   'Aatrox': { gender: 'Male', position: ['Top'], species: ['Darkin'], rangeType: 'Melee', region: ['Runeterra'] },
+  'Ambessa': { gender: 'Female', position: ['Top', 'Jungle'], species: ['Human'], rangeType: 'Melee', region: ['Noxus'] },
   'Ahri': { gender: 'Female', position: ['Mid'], species: ['Vastaya'], rangeType: 'Ranged', region: ['Ionia'] },
   'Akali': { gender: 'Female', position: ['Mid', 'Top'], species: ['Human'], rangeType: 'Melee', region: ['Ionia'] },
   'Akshan': { gender: 'Male', position: ['Mid', 'ADC'], species: ['Human'], rangeType: 'Ranged', region: ['Shurima'] },
@@ -116,6 +117,7 @@ export const championMetadata: Record<string, ChampionMetadata> = {
   'Malphite': { gender: 'Male', position: ['Top', 'Support'], species: ['Golem'], rangeType: 'Melee', region: ['Ixtal'] },
   'Malzahar': { gender: 'Male', position: ['Mid'], species: ['Human', 'Void-Being'], rangeType: 'Ranged', region: ['Void'] },
   'Maokai': { gender: 'Male', position: ['Top', 'Support'], species: ['Spirit'], rangeType: 'Melee', region: ['Shadow Isles'] },
+  'Mel': { gender: 'Female', position: ['Support', 'Mid'], species: ['Human'], rangeType: 'Ranged', region: ['Noxus'] },
   'Master Yi': { gender: 'Male', position: ['Jungle'], species: ['Human'], rangeType: 'Melee', region: ['Ionia'] },
   'Milio': { gender: 'Male', position: ['Support'], species: ['Human'], rangeType: 'Ranged', region: ['Ixtal'] },
   'Miss Fortune': { gender: 'Female', position: ['ADC'], species: ['Human'], rangeType: 'Ranged', region: ['Bilgewater'] },
@@ -222,6 +224,7 @@ export const championMetadata: Record<string, ChampionMetadata> = {
   'Yone': { gender: 'Male', position: ['Mid', 'Top'], species: ['Human', 'Spirit'], rangeType: 'Melee', region: ['Ionia'] },
   'Yorick': { gender: 'Male', position: ['Top'], species: ['Human', 'Undead'], rangeType: 'Melee', region: ['Shadow Isles'] },
   'Yuumi': { gender: 'Female', position: ['Support'], species: ['Cat', 'Magically Altered'], rangeType: 'Ranged', region: ['Bandle City'] },
+  'Yunara': { gender: 'Female', position: ['ADC'], species: ['Human', 'Spirit'], rangeType: 'Ranged', region: ['Ionia'] },
 
   // Z
   'Zac': { gender: 'Male', position: ['Jungle'], species: ['Golem'], rangeType: 'Melee', region: ['Zaun'] },

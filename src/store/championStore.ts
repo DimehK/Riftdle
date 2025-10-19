@@ -81,19 +81,22 @@ export const useChampionStore = create<ChampionStore>()(
 
       // Nouvelle partie
       resetGame: () => {
-        const { isGameWon } = get();
+        const { isGameWon, gaveUp } = get();
 
-        // Si abandon, reset winstreak
-        if (!isGameWon) {
+        // Si abandon ou perte, reset winstreak
+        if (!isGameWon || gaveUp) {
           get().resetWinstreak();
         }
+
+        // Incrémenter totalGamesPlayed seulement si le jeu était actif (au moins 1 essai)
+        const shouldCountGame = get().guesses.length > 0;
 
         set((state) => ({
           currentChampion: null,
           guesses: [],
           isGameWon: false,
           gaveUp: false,
-          totalGamesPlayed: state.totalGamesPlayed + 1,
+          totalGamesPlayed: shouldCountGame ? state.totalGamesPlayed + 1 : state.totalGamesPlayed,
         }));
       },
 

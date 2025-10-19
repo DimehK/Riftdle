@@ -50,7 +50,7 @@ export const proPlayers: ProPlayer[] = [
     league: 'LCK',
     favoriteChampion: 'Bard',
     birthYear: 2002,
-    hasWonWorlds: false,
+    hasWonWorlds: true,
     region: 'Korea',
     team: 'T1',
   },
