@@ -57,7 +57,7 @@ body {
 }
 
 .animate-pulse-victory {
-  animation: pulse-victory 2s ease-in-out infinite;
+  animation: pulse-victory 3s ease-in-out infinite;
 }
 
 /* Animation de slide-in pour les nouvelles tentatives */
@@ -73,7 +73,7 @@ body {
 }
 
 .animate-slide-in {
-  animation: slide-in 0.3s ease-out;
+  animation: slide-in 0.6s ease-out;
 }
 
 /* Animation pour les champs individuels */
@@ -89,20 +89,20 @@ body {
 }
 
 .field-reveal {
-  animation: field-reveal 0.4s ease-out backwards;
+  animation: field-reveal 0.8s ease-out backwards;
 }
 
 /* Délais pour l'animation en cascade */
-.field-delay-1 { animation-delay: 0.1s; }
-.field-delay-2 { animation-delay: 0.2s; }
-.field-delay-3 { animation-delay: 0.3s; }
-.field-delay-4 { animation-delay: 0.4s; }
-.field-delay-5 { animation-delay: 0.5s; }
-.field-delay-6 { animation-delay: 0.6s; }
-.field-delay-7 { animation-delay: 0.7s; }
-.field-delay-8 { animation-delay: 0.8s; }
-.field-delay-9 { animation-delay: 0.9s; }
-.field-delay-10 { animation-delay: 1.0s; }
+.field-delay-1 { animation-delay: 0.15s; }
+.field-delay-2 { animation-delay: 0.3s; }
+.field-delay-3 { animation-delay: 0.45s; }
+.field-delay-4 { animation-delay: 0.6s; }
+.field-delay-5 { animation-delay: 0.75s; }
+.field-delay-6 { animation-delay: 0.9s; }
+.field-delay-7 { animation-delay: 1.05s; }
+.field-delay-8 { animation-delay: 1.2s; }
+.field-delay-9 { animation-delay: 1.35s; }
+.field-delay-10 { animation-delay: 1.5s; }
 
 /* Effet de glow pour les éléments actifs */
 .glow-effect {
@@ -125,7 +125,7 @@ body {
 }
 
 .animate-shake {
-  animation: shake 0.5s ease-in-out;
+  animation: shake 0.8s ease-in-out;
 }
 
 /* Effet de particules pour les victoires */
@@ -141,7 +141,7 @@ body {
 }
 
 .confetti {
-  animation: confetti 3s ease-out forwards;
+  animation: confetti 4.5s ease-out forwards;
 }
 
 /* Responsive breakpoints */

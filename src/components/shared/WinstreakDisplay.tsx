@@ -47,7 +47,7 @@ export default function WinstreakDisplay({
     <div className="w-full max-w-5xl mx-auto">
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         {/* Winstreak actuelle */}
-        <div className={`${colors.streak} rounded-xl p-6 text-white shadow-lg transform transition-transform hover:scale-105`}>
+        <div className={`${colors.streak} rounded-xl p-6 text-white shadow-lg transform transition-transform duration-500 hover:scale-105`}>
           <div className="text-center">
             <div className="text-4xl font-extrabold mb-1">{winstreak}</div>
             <div className="text-sm opacity-90 font-medium">Current Streak</div>
@@ -55,7 +55,7 @@ export default function WinstreakDisplay({
         </div>
 
         {/* Meilleure série */}
-        <div className={`${colors.best} rounded-xl p-6 text-white shadow-lg transform transition-transform hover:scale-105`}>
+        <div className={`${colors.best} rounded-xl p-6 text-white shadow-lg transform transition-transform duration-500 hover:scale-105`}>
           <div className="text-center">
             <div className="text-4xl font-extrabold mb-1">{bestStreak}</div>
             <div className="text-sm opacity-90 font-medium">Best Streak</div>
@@ -63,7 +63,7 @@ export default function WinstreakDisplay({
         </div>
 
         {/* Parties jouées */}
-        <div className={`${colors.games} rounded-xl p-6 text-white shadow-lg transform transition-transform hover:scale-105`}>
+        <div className={`${colors.games} rounded-xl p-6 text-white shadow-lg transform transition-transform duration-500 hover:scale-105`}>
           <div className="text-center">
             <div className="text-4xl font-extrabold mb-1">{totalGamesPlayed}</div>
             <div className="text-sm opacity-90 font-medium">Games Played</div>
@@ -71,7 +71,7 @@ export default function WinstreakDisplay({
         </div>
 
         {/* Taux de victoire */}
-        <div className={`${colors.rate} rounded-xl p-6 text-white shadow-lg transform transition-transform hover:scale-105`}>
+        <div className={`${colors.rate} rounded-xl p-6 text-white shadow-lg transform transition-transform duration-500 hover:scale-105`}>
           <div className="text-center">
             <div className="text-4xl font-extrabold mb-1">{winRate}%</div>
             <div className="text-sm opacity-90 font-medium">Win Rate</div>
@@ -83,7 +83,7 @@ export default function WinstreakDisplay({
           {!showConfirm ? (
             <button
               onClick={() => setShowConfirm(true)}
-              className="w-full h-full flex flex-col items-center justify-center gap-2 hover:border-red-400 transition-colors"
+              className="w-full h-full flex flex-col items-center justify-center gap-2 hover:border-red-400 transition-colors duration-500"
             >
               <div className="text-3xl">🔄</div>
               <div className="text-sm opacity-90 font-medium">Reset Stats</div>

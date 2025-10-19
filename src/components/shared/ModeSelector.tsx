@@ -13,7 +13,7 @@ export default function ModeSelector({ currentMode, onModeChange }: Props) {
         {/* Mode Champions */}
         <button
           onClick={() => onModeChange('champions')}
-          className={`group relative px-8 py-6 rounded-2xl font-bold text-lg transition-all ${
+          className={`group relative px-8 py-6 rounded-2xl font-bold text-lg transition-all duration-500 ${
             currentMode === 'champions'
               ? 'bg-black/60 backdrop-blur-md border-3 border-blue-400 text-white shadow-2xl scale-110'
               : 'bg-black/40 backdrop-blur-md border-2 border-white/30 text-gray-200 hover:border-blue-400 shadow-lg hover:scale-105'
@@ -41,7 +41,7 @@ export default function ModeSelector({ currentMode, onModeChange }: Props) {
         {/* Mode Pro Players */}
         <button
           onClick={() => onModeChange('proplayers')}
-          className={`group relative px-8 py-6 rounded-2xl font-bold text-lg transition-all ${
+          className={`group relative px-8 py-6 rounded-2xl font-bold text-lg transition-all duration-500 ${
             currentMode === 'proplayers'
               ? 'bg-black/60 backdrop-blur-md border-3 border-blue-400 text-white shadow-2xl scale-110'
               : 'bg-black/40 backdrop-blur-md border-2 border-white/30 text-gray-200 hover:border-blue-400 shadow-lg hover:scale-105'

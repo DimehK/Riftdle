@@ -91,7 +91,7 @@ export default function ChampionGuessInput({
           onKeyDown={handleKeyDown}
           disabled={disabled}
           placeholder="Type a champion name, position, or region to filter..."
-          className="w-full px-6 py-4 text-lg bg-black/40 backdrop-blur-md border-2 border-white/20 rounded-2xl focus:border-white/40 focus:outline-none disabled:bg-gray-100 disabled:border-gray-300 transition-colors shadow-lg text-white placeholder-gray-400"
+          className="w-full px-6 py-4 text-lg bg-black/40 backdrop-blur-md border-2 border-white/20 rounded-2xl focus:border-white/40 focus:outline-none disabled:bg-gray-100 disabled:border-gray-300 transition-colors duration-500 shadow-lg text-white placeholder-gray-400"
           autoComplete="off"
         />
         {input && !disabled && (
@@ -111,7 +111,7 @@ export default function ChampionGuessInput({
             <button
               key={champ.id}
               onClick={() => handleSelect(champ)}
-              className={`w-full px-6 py-3 text-left flex items-center gap-4 transition-colors ${
+              className={`w-full px-6 py-3 text-left flex items-center gap-4 transition-colors duration-300 ${
                 index === selectedIndex
                   ? 'bg-white/20 text-white'
                   : 'text-white hover:bg-white/10'

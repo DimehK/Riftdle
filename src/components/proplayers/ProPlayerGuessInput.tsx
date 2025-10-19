@@ -91,7 +91,7 @@ export default function ProPlayerGuessInput({ proPlayers, onGuess, disabled, gue
           onKeyDown={handleKeyDown}
           disabled={disabled}
           placeholder="Type a player name, role, or region to filter..."
-          className="w-full px-6 py-4 text-lg rounded-2xl bg-black/40 backdrop-blur-md text-white placeholder-gray-400 border-2 border-white/20 focus:border-white/40 focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full px-6 py-4 text-lg rounded-2xl bg-black/40 backdrop-blur-md text-white placeholder-gray-400 border-2 border-white/20 focus:border-white/40 focus:outline-none transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
         />
         <div className="absolute right-4 top-1/2 -translate-y-1/2 text-2xl">
           ⭐
@@ -105,7 +105,7 @@ export default function ProPlayerGuessInput({ proPlayers, onGuess, disabled, gue
             <button
               key={player.id}
               onClick={() => handleSelectPlayer(player)}
-              className={`w-full px-6 py-4 flex items-center gap-4 transition-all ${
+              className={`w-full px-6 py-4 flex items-center gap-4 transition-all duration-300 ${
                 index === selectedIndex
                   ? 'bg-white/20 text-white'
                   : 'text-white hover:bg-white/10'

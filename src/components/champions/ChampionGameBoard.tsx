@@ -116,7 +116,7 @@ export default function ChampionGameBoard({ champions }: Props) {
             )}
             <button
               onClick={startNewGame}
-              className="mt-8 px-8 py-4 bg-black/50 backdrop-blur-md border-2 border-white/30 text-white text-xl rounded-2xl hover:border-blue-400 font-bold shadow-xl transform transition-transform hover:scale-105"
+              className="mt-8 px-8 py-4 bg-black/50 backdrop-blur-md border-2 border-white/30 text-white text-xl rounded-2xl hover:border-blue-400 font-bold shadow-xl transform transition-transform duration-500 hover:scale-105"
             >
               Play Again
             </button>
@@ -140,7 +140,7 @@ export default function ChampionGameBoard({ champions }: Props) {
             <div className="text-center">
               <button
                 onClick={() => setRevealedLetters(prev => prev + 1)}
-                className="px-6 py-3 bg-black/40 backdrop-blur-md border-2 border-yellow-400 text-yellow-300 rounded-xl hover:border-yellow-500 hover:bg-yellow-400/20 font-bold shadow-lg transition-all"
+                className="px-6 py-3 bg-black/40 backdrop-blur-md border-2 border-yellow-400 text-yellow-300 rounded-xl hover:border-yellow-500 hover:bg-yellow-400/20 font-bold shadow-lg transition-all duration-500"
               >
                 💡 Reveal Next Letter ({revealedLetters}/{guesses.length - 2})
               </button>

@@ -67,6 +67,7 @@ export const championReleaseYears: Record<string, number> = {
   'Xin Zhao': 2010,
   'Kog\'Maw': 2010,
   'Malzahar': 2010,
+  'Trundle': 2010,
 
   // 2011
   'Karma': 2011,
