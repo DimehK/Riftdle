@@ -84,7 +84,7 @@ export default function Home() {
             <img
               src="/riftdle-logo.png"
               alt="Riftdle"
-              className="h-24 md:h-40 w-auto transition-transform duration-300 hover:scale-110 cursor-pointer"
+              className="h-72 md:h-96 w-auto transition-transform duration-300 hover:scale-110 cursor-pointer"
               style={{
                 filter: 'drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.9))'
               }}
