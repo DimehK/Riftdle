@@ -1,4 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Loldle Clone
+
+## Architecture du projet
+
+### Modes de jeu
+1. **Champions** : Deviner le champion LoL
+2. **Pro Players** : Deviner le joueur professionnel
+
+### Organisation
+- `components/champions/` : Composants mode Champions
+- `components/proplayers/` : Composants mode Pro Players
+- `components/shared/` : Composants réutilisables
+- `store/` : États globaux (Zustand)
+- `types/` : Interfaces TypeScript
+- `data/` : Base de données statique
+- `utils/` : Fonctions utilitaires
+
+### Technologies
+- Next.js 14 (App Router)
+- TypeScript
+- Tailwind CSS
+- Zustand (state management)
+
+---
 
 ## Getting Started
 

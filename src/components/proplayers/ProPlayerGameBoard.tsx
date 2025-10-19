@@ -1,0 +1,228 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useProPlayerStore } from '@/store/proPlayerStore';
+import { getAllProPlayers } from '@/data/proPlayers';
+import { ProPlayer } from '@/types/proPlayer';
+import ProPlayerGuessInput from './ProPlayerGuessInput';
+import ProPlayerResultRow from './ProPlayerResultRow';
+
+export default function ProPlayerGameBoard() {
+  const {
+    currentPlayer,
+    guesses,
+    isGameWon,
+    gaveUp,
+    dailyPlayerId,
+    dailyCompleted,
+    setCurrentPlayer,
+    addGuess,
+    resetGame,
+    revealAnswer,
+    checkAndResetDaily,
+    setDailyPlayer,
+  } = useProPlayerStore();
+
+  const proPlayers = getAllProPlayers();
+  const [initialized, setInitialized] = useState(false);
+  const [revealedLetters, setRevealedLetters] = useState(0);
+
+  // Démarrer une nouvelle partie (disabled in daily mode)
+  const startNewGame = () => {
+    // Daily mode: can't start new game until next day
+    return;
+  };
+
+  // Initialiser le jeu au chargement (une seule fois)
+  useEffect(() => {
+    if (!initialized && proPlayers.length > 0) {
+      // Check if we need to reset for a new day
+      checkAndResetDaily();
+
+      // If no daily player set, pick a new one
+      if (!dailyPlayerId) {
+        const randomPlayer = proPlayers[Math.floor(Math.random() * proPlayers.length)];
+        setCurrentPlayer(randomPlayer);
+        setDailyPlayer(randomPlayer.id);
+      } else if (!currentPlayer) {
+        // Find and set the daily player
+        const dailyPlayer = proPlayers.find(p => p.id === dailyPlayerId);
+        if (dailyPlayer) {
+          setCurrentPlayer(dailyPlayer);
+        }
+      }
+      setInitialized(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialized]);
+
+  // Gérer une tentative
+  const handleGuess = (player: ProPlayer) => {
+    addGuess(player);
+  };
+
+  // Abandonner
+  const handleGiveUp = () => {
+    revealAnswer();
+  };
+
+  // Loading state
+  if (!currentPlayer) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-2xl text-white">Loading pro players...</div>
+      </div>
+    );
+  }
+
+  const guessedPlayerIds = guesses.map(g => g.player.id);
+
+  // Calculate hint - show revealed letters
+  const getHint = () => {
+    if (!currentPlayer || isGameWon || revealedLetters === 0) return null;
+
+    const hint = currentPlayer.ign.substring(0, revealedLetters);
+    const remaining = currentPlayer.ign.length - revealedLetters;
+
+    return {
+      letters: hint,
+      blanks: '_'.repeat(remaining)
+    };
+  };
+
+  const hint = getHint();
+
+  return (
+    <div className="max-w-6xl mx-auto p-6 space-y-8">
+      {/* Zone de victoire */}
+      {isGameWon && currentPlayer && (
+        <div className="relative overflow-hidden rounded-3xl shadow-2xl bg-black/50 backdrop-blur-md border-2 border-white/20">
+          <div className="relative z-10 p-12 text-center space-y-6">
+            {!gaveUp && <div className="text-6xl mb-4">🎉</div>}
+            <h2 className="text-5xl font-bold text-white drop-shadow-lg">
+              {gaveUp ? 'Nice try!' : 'Congratulations!'}
+            </h2>
+            <p className="text-2xl text-white drop-shadow-md">
+              {gaveUp ? (
+                <>The pro player was <span className="font-bold text-yellow-300">{currentPlayer.ign}</span></>
+              ) : (
+                <>You found <span className="font-bold text-yellow-300">{currentPlayer.ign}</span></>
+              )}
+            </p>
+            <p className="text-xl text-gray-200 drop-shadow-md">
+              {currentPlayer.realName}
+            </p>
+            {!gaveUp && (
+              <div className="bg-white/20 backdrop-blur-md rounded-2xl p-6 inline-block">
+                <p className="text-3xl font-bold text-white">
+                  Guessed in {guesses.length} {guesses.length === 1 ? 'try' : 'tries'}!
+                </p>
+              </div>
+            )}
+            <div className="mt-8 px-8 py-4 bg-black/50 backdrop-blur-md border-2 border-white/30 text-white text-xl rounded-2xl font-bold shadow-xl">
+              Come back tomorrow at 1pm CET for a new player!
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Aide après 10 essais */}
+      {!isGameWon && guesses.length >= 10 && (
+        <div className="bg-black/40 backdrop-blur-md border-2 border-white/20 rounded-2xl p-6 text-center">
+          <p className="text-xl text-white mb-4">
+            Having trouble? The answer is <span className="font-bold">{currentPlayer.ign}</span>!
+          </p>
+          <div className="px-6 py-3 bg-black/50 backdrop-blur-md border-2 border-white/30 text-white rounded-xl font-bold">
+            Come back tomorrow at 1pm CET for a new player!
+          </div>
+        </div>
+      )}
+
+      {/* Input de devinette */}
+      {!isGameWon && !dailyCompleted && (
+        <>
+          <ProPlayerGuessInput
+            proPlayers={proPlayers}
+            onGuess={handleGuess}
+            disabled={isGameWon || dailyCompleted}
+            guessedPlayers={guessedPlayerIds}
+          />
+
+          {/* Hint System */}
+          {guesses.length >= 3 && revealedLetters < (guesses.length - 2) && (
+            <div className="text-center">
+              <button
+                onClick={() => setRevealedLetters(prev => prev + 1)}
+                className="px-6 py-3 bg-black/40 backdrop-blur-md border-2 border-yellow-400 text-yellow-300 rounded-xl hover:border-yellow-500 hover:bg-yellow-400/20 font-bold shadow-lg transition-all"
+              >
+                💡 Reveal Next Letter ({revealedLetters}/{guesses.length - 2})
+              </button>
+            </div>
+          )}
+
+          {hint && (
+            <div className="bg-black/40 backdrop-blur-md border-2 border-yellow-400 rounded-xl p-4 text-center">
+              <div className="text-yellow-300 font-bold text-sm mb-2">💡 Hint</div>
+              <div className="text-white text-3xl font-bold tracking-widest">
+                {hint.letters}
+                <span className="text-gray-500">{hint.blanks}</span>
+              </div>
+              <div className="text-xs text-gray-300 mt-2">
+                {revealedLetters} letter{revealedLetters > 1 ? 's' : ''} revealed
+              </div>
+            </div>
+          )}
+        </>
+      )}
+
+      {/* Liste des tentatives */}
+      <div className="space-y-3">
+        {[...guesses].reverse().map((guess, idx) => (
+          <ProPlayerResultRow
+            key={guesses.length - 1 - idx}
+            guess={guess.player}
+            answer={currentPlayer}
+          />
+        ))}
+      </div>
+
+      {/* Boutons d'action */}
+      {!isGameWon && guesses.length > 0 && (
+        <div className="flex gap-4 justify-center">
+          <button
+            onClick={handleGiveUp}
+            className="px-6 py-3 bg-black/40 backdrop-blur-md border-2 border-white/20 text-white rounded-xl hover:border-blue-400 font-bold shadow-lg"
+          >
+            😔 Give Up
+          </button>
+        </div>
+      )}
+
+      {/* Légende pour les débutants */}
+      {!isGameWon && guesses.length === 0 && (
+        <div className="bg-black/40 backdrop-blur-md border-2 border-white/20 rounded-xl p-4 text-white">
+          <h3 className="text-lg font-bold mb-3 text-center">How to Play</h3>
+          <div className="grid grid-cols-3 gap-3 text-xs max-w-2xl mx-auto">
+            <div className="text-center">
+              <div className="w-6 h-6 bg-green-500 rounded-md mx-auto mb-2"></div>
+              <p className="font-bold text-sm">Green</p>
+              <p className="text-xs opacity-75">Correct match!</p>
+            </div>
+            <div className="text-center">
+              <div className="w-6 h-6 bg-yellow-500 rounded-md mx-auto mb-2"></div>
+              <p className="font-bold text-sm">Yellow</p>
+              <p className="text-xs opacity-75">Close!</p>
+            </div>
+            <div className="text-center">
+              <div className="w-6 h-6 bg-red-500 rounded-md mx-auto mb-2 flex items-center justify-center text-sm">
+                ↓
+              </div>
+              <p className="font-bold text-sm">Red + Arrow</p>
+              <p className="text-xs opacity-75">Wrong value</p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(npm run dev)",
+      "Bash(npm run build)",
+      "Bash(timeout:*)",
+      "Bash(tasklist)",
+      "Bash(findstr:*)",
+      "WebFetch(domain:food-le.io)",
+      "WebFetch(domain:ddragon.leagueoflegends.com)",
+      "WebSearch",
+      "Bash(curl -s https://ddragon.leagueoflegends.com/api/versions.json)",
+      "Bash(git init)",
+      "Bash(git add .)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nAdd complete Riftdle game with Champions and Pro Players modes\n\n- Implement dual game modes (Champions and Pro Players)\n- Add Zustand state management with persistence\n- Integrate Riot Data Dragon API v15.20.1 (171 champions)\n- Create transparent glassmorphism UI with custom background\n- Add progressive hint system (one letter at a time after 3 tries)\n- Implement daily challenge for Pro Players (resets at 1pm CET)\n- Add stats tracking (winstreak, best streak, games played, win rate)\n- Create comparison system with color-coded feedback\n- Add tooltips for mode badges\n- Implement reset stats functionality\n- Add responsive design with Tailwind CSS\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git reset HEAD~1)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

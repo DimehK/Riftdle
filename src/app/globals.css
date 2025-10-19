@@ -24,3 +24,143 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Scrollbar personnalisée */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+/* Animation de pulsation pour les victoires */
+@keyframes pulse-victory {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+.animate-pulse-victory {
+  animation: pulse-victory 2s ease-in-out infinite;
+}
+
+/* Animation de slide-in pour les nouvelles tentatives */
+@keyframes slide-in {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.3s ease-out;
+}
+
+/* Animation pour les champs individuels */
+@keyframes field-reveal {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.field-reveal {
+  animation: field-reveal 0.4s ease-out backwards;
+}
+
+/* Délais pour l'animation en cascade */
+.field-delay-1 { animation-delay: 0.1s; }
+.field-delay-2 { animation-delay: 0.2s; }
+.field-delay-3 { animation-delay: 0.3s; }
+.field-delay-4 { animation-delay: 0.4s; }
+.field-delay-5 { animation-delay: 0.5s; }
+.field-delay-6 { animation-delay: 0.6s; }
+.field-delay-7 { animation-delay: 0.7s; }
+.field-delay-8 { animation-delay: 0.8s; }
+.field-delay-9 { animation-delay: 0.9s; }
+.field-delay-10 { animation-delay: 1.0s; }
+
+/* Effet de glow pour les éléments actifs */
+.glow-effect {
+  box-shadow: 0 0 20px rgba(102, 126, 234, 0.5),
+              0 0 40px rgba(118, 75, 162, 0.3);
+}
+
+/* Amélioration du focus pour l'accessibilité */
+*:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Animation de shake pour les erreurs */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Effet de particules pour les victoires */
+@keyframes confetti {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-1000px) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.confetti {
+  animation: confetti 3s ease-out forwards;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 768px) {
+  .grid-cols-10 {
+    grid-template-columns: repeat(5, 1fr) !important;
+  }
+
+  .grid-cols-8 {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-cols-10 {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .grid-cols-8 {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
