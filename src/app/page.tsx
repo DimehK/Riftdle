@@ -78,15 +78,15 @@ export default function Home() {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Header */}
+        {/* Header - LoL Gold Glow */}
         <header className="text-center mb-4 px-4">
           <div className="flex justify-center">
             <img
               src="/riftdle-logo.png"
               alt="Riftdle"
-              className="h-80 md:h-[500px] w-auto transition-transform duration-300 hover:scale-110 cursor-pointer"
+              className="h-80 md:h-[500px] w-auto transition-all duration-500 hover:scale-110 cursor-pointer"
               style={{
-                filter: 'drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.9))'
+                filter: 'drop-shadow(0 0 20px rgba(200, 155, 60, 0.8)) drop-shadow(0 0 40px rgba(10, 200, 185, 0.4))'
               }}
             />
           </div>
@@ -117,17 +117,19 @@ export default function Home() {
           <ProPlayerGameBoard />
         )}
 
-        {/* Footer */}
-        <footer className="text-center mt-16 text-white text-sm">
-          <p className="font-semibold" style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)' }}>
-            Made with love by a LoL fan for LoL fans
-          </p>
-          <p className="mt-2" style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)' }}>
-            Data from Riot Games Data Dragon API
-          </p>
-          <p className="mt-2 text-xs opacity-75" style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)' }}>
-            This project is not affiliated with Riot Games
-          </p>
+        {/* Footer - LoL Gold Theme */}
+        <footer className="text-center mt-16 text-sm">
+          <div className="inline-block px-8 py-4 rounded-xl border-2 border-[#C89B3C]/30 bg-[#1E2328]/80 backdrop-blur-sm">
+            <p className="font-bold text-[#C89B3C] text-lg" style={{ textShadow: '0 0 10px rgba(200, 155, 60, 0.5)' }}>
+              Made with love by a LoL fan for LoL fans
+            </p>
+            <p className="mt-2 text-[#0AC8B9]" style={{ textShadow: '0 0 8px rgba(10, 200, 185, 0.4)' }}>
+              Data from Riot Games Data Dragon API
+            </p>
+            <p className="mt-2 text-xs text-[#F0E6D2]/60">
+              This project is not affiliated with Riot Games
+            </p>
+          </div>
         </footer>
       </div>
     </main>

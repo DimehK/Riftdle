@@ -29,7 +29,6 @@ export default function ChampionGuessInput({
       const filtered = champions.filter((champ) => {
         // Exclure les champions déjà devinés
         if (guessedChampions.includes(champ.id)) return false;
-
         // Rechercher dans plusieurs champs
         return (
           champ.name.toLowerCase().includes(searchLower) ||
