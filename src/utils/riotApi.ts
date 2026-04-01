@@ -80,7 +80,7 @@ export function getChampionSplashUrl(championId: string, skinNum: number = 0): s
 }
 
 /**
- * Récupère la liste des skins d'un champion
+ * Récupère la liste des skins d'un champion (exclut les chromas)
  */
 export async function getChampionSkins(championId: string): Promise<{ num: number; name: string }[]> {
   try {
@@ -91,7 +91,10 @@ export async function getChampionSkins(championId: string): Promise<{ num: numbe
     const data = await response.json();
     const skins = data.data[championId]?.skins;
     if (!skins || skins.length === 0) return [{ num: 0, name: 'default' }];
-    return skins.map((s: { num: number; name: string }) => ({ num: s.num, name: s.name }));
+    // Filter out chromas: they have parenthesized color names like "(Ruby)", "(Pearl)"
+    return skins
+      .filter((s: { num: number; name: string }) => !s.name.match(/\(.*\)$/))
+      .map((s: { num: number; name: string }) => ({ num: s.num, name: s.name }));
   } catch {
     return [{ num: 0, name: 'default' }];
   }

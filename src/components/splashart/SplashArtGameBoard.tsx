@@ -27,6 +27,7 @@ export default function SplashArtGameBoard({ champions }: Props) {
 
   const [initialized, setInitialized] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
+  const [imgError, setImgError] = useState(false);
 
   // Random origin for the zoom, stable per champion + skin
   const zoomOrigin = useMemo(() => {
@@ -40,6 +41,7 @@ export default function SplashArtGameBoard({ champions }: Props) {
   const startNewGame = async () => {
     const randomChamp = champions[Math.floor(Math.random() * champions.length)];
     resetGame();
+    setImgError(false);
     const skins = await getChampionSkins(randomChamp.id);
     const randomSkin = skins[Math.floor(Math.random() * skins.length)];
     setCurrentChampion(randomChamp, randomSkin.num, randomSkin.name);
@@ -84,8 +86,14 @@ export default function SplashArtGameBoard({ champions }: Props) {
   }
 
   const currentScale = ZOOM_LEVELS[zoomLevel];
-  const splashUrl = getChampionSplashUrl(currentChampion.id, currentSkinNum);
+  const splashUrl = imgError
+    ? getChampionSplashUrl(currentChampion.id, 0)
+    : getChampionSplashUrl(currentChampion.id, currentSkinNum);
   const skinLabel = currentSkinName === 'default' ? currentChampion.name : currentSkinName;
+
+  const handleImgError = () => {
+    if (!imgError) setImgError(true);
+  };
 
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-8">
@@ -109,6 +117,7 @@ export default function SplashArtGameBoard({ champions }: Props) {
                 src={splashUrl}
                 alt={skinLabel}
                 className="max-h-64 rounded-2xl border-2 border-white/30 shadow-xl"
+                onError={handleImgError}
               />
             </div>
             <p className="text-2xl text-white drop-shadow-md">
@@ -162,6 +171,7 @@ export default function SplashArtGameBoard({ champions }: Props) {
                   transformOrigin: `${zoomOrigin.x}% ${zoomOrigin.y}%`,
                 }}
                 draggable={false}
+                onError={handleImgError}
               />
             </div>
             <div className="flex items-center gap-3 text-sm text-gray-300">
