@@ -27,7 +27,7 @@ interface SplashArtStore {
 }
 
 // Zoom levels: starts very zoomed in, progressively zooms out
-const ZOOM_LEVELS = [6, 4.5, 3.5, 2.8, 2.2, 1.8, 1.4, 1.1, 1];
+const ZOOM_LEVELS = [2.8, 2.6, 2.4, 2.2, 2.0, 1.8, 1.6, 1.4, 1.2, 1.0];
 
 export const useSplashArtStore = create<SplashArtStore>()(
   persist(

@@ -2,7 +2,7 @@ import { Champion } from '@/types/champion';
 import { championReleaseYears } from '@/data/championReleaseYears';
 import { championMetadata } from '@/data/championMetadata';
 
-const DDRAGON_VERSION = '15.20.1';
+const DDRAGON_VERSION = '16.7.1';
 const BASE_URL = `https://ddragon.leagueoflegends.com/cdn/${DDRAGON_VERSION}`;
 
 /**
