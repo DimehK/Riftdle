@@ -1,8 +1,10 @@
 'use client';
 
+type GameMode = 'champions' | 'proplayers' | 'splashart';
+
 interface Props {
-  currentMode: 'champions' | 'proplayers';
-  onModeChange: (mode: 'champions' | 'proplayers') => void;
+  currentMode: GameMode;
+  onModeChange: (mode: GameMode) => void;
 }
 
 export default function ModeSelector({ currentMode, onModeChange }: Props) {
@@ -65,6 +67,29 @@ export default function ModeSelector({ currentMode, onModeChange }: Props) {
             </div>
           </div>
         </button>
+
+        {/* Mode Splash Art */}
+        <button
+          onClick={() => onModeChange('splashart')}
+          className={`group relative px-8 py-6 rounded-2xl font-bold text-lg transition-all duration-500 ${
+            currentMode === 'splashart'
+              ? 'bg-black/60 backdrop-blur-md border-3 border-blue-400 text-white shadow-2xl scale-110'
+              : 'bg-black/40 backdrop-blur-md border-2 border-white/30 text-gray-200 hover:border-blue-400 shadow-lg hover:scale-105'
+          }`}
+        >
+          <div className="flex flex-col items-center gap-2">
+            <div>Splash Art</div>
+            {currentMode === 'splashart' && (
+              <div className="text-xs bg-white/20 px-3 py-1 rounded-full">
+                Active
+              </div>
+            )}
+          </div>
+          {/* Badge NEW */}
+          <div className="absolute -top-2 -right-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+            NEW
+          </div>
+        </button>
       </div>
 
       {/* Description du mode actif */}
@@ -74,9 +99,13 @@ export default function ModeSelector({ currentMode, onModeChange }: Props) {
             <>
               Guess the champion based on gender, position, species, range, region, and release year
             </>
-          ) : (
+          ) : currentMode === 'proplayers' ? (
             <>
               Guess the pro player based on their career, region, and achievements
+            </>
+          ) : (
+            <>
+              Guess the champion from a zoomed-in splash art — each wrong guess reveals more!
             </>
           )}
         </p>

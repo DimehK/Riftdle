@@ -6,13 +6,15 @@ import { getAllChampions } from '@/utils/riotApi';
 import { Champion } from '@/types/champion';
 import { useChampionStore } from '@/store/championStore';
 import { useProPlayerStore } from '@/store/proPlayerStore';
+import { useSplashArtStore } from '@/store/splashArtStore';
 import ChampionGameBoard from '@/components/champions/ChampionGameBoard';
 import ProPlayerGameBoard from '@/components/proplayers/ProPlayerGameBoard';
+import SplashArtGameBoard from '@/components/splashart/SplashArtGameBoard';
 import WinstreakDisplay from '@/components/shared/WinstreakDisplay';
 import ModeSelector from '@/components/shared/ModeSelector';
 
 export default function Home() {
-  const [mode, setMode] = useState<'champions' | 'proplayers'>('champions');
+  const [mode, setMode] = useState<'champions' | 'proplayers' | 'splashart'>('champions');
   const [champions, setChampions] = useState<Champion[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -26,6 +28,11 @@ export default function Home() {
   const proPlayerBestStreak = useProPlayerStore((state) => state.bestStreak);
   const proPlayerTotalGamesPlayed = useProPlayerStore((state) => state.totalGamesPlayed);
   const proPlayerTotalWins = useProPlayerStore((state) => state.totalWins);
+
+  const splashArtWinstreak = useSplashArtStore((state) => state.winstreak);
+  const splashArtBestStreak = useSplashArtStore((state) => state.bestStreak);
+  const splashArtTotalGamesPlayed = useSplashArtStore((state) => state.totalGamesPlayed);
+  const splashArtTotalWins = useSplashArtStore((state) => state.totalWins);
 
   const championStats = {
     winstreak: championWinstreak,
@@ -41,6 +48,13 @@ export default function Home() {
     totalWins: proPlayerTotalWins,
   };
 
+  const splashArtStats = {
+    winstreak: splashArtWinstreak,
+    bestStreak: splashArtBestStreak,
+    totalGamesPlayed: splashArtTotalGamesPlayed,
+    totalWins: splashArtTotalWins,
+  };
+
   // Charger les champions au démarrage
   useEffect(() => {
     async function loadChampions() {
@@ -53,12 +67,12 @@ export default function Home() {
   }, []);
 
   // Changer de mode
-  const handleModeChange = (newMode: 'champions' | 'proplayers') => {
+  const handleModeChange = (newMode: 'champions' | 'proplayers' | 'splashart') => {
     setMode(newMode);
   };
 
   // Déterminer les stats à afficher selon le mode
-  const currentStats = mode === 'champions' ? championStats : proPlayerStats;
+  const currentStats = mode === 'champions' ? championStats : mode === 'proplayers' ? proPlayerStats : splashArtStats;
 
   return (
     <main className="min-h-screen relative py-12">
@@ -113,8 +127,10 @@ export default function Home() {
           </div>
         ) : mode === 'champions' ? (
           <ChampionGameBoard champions={champions} />
-        ) : (
+        ) : mode === 'proplayers' ? (
           <ProPlayerGameBoard />
+        ) : (
+          <SplashArtGameBoard champions={champions} />
         )}
 
         {/* Footer - LoL Gold Theme */}

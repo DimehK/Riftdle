@@ -3,13 +3,14 @@
 import { useState } from 'react';
 import { useChampionStore } from '@/store/championStore';
 import { useProPlayerStore } from '@/store/proPlayerStore';
+import { useSplashArtStore } from '@/store/splashArtStore';
 
 interface Props {
   winstreak: number;
   bestStreak: number;
   totalGamesPlayed: number;
   totalWins: number;
-  mode: 'champions' | 'proplayers';
+  mode: 'champions' | 'proplayers' | 'splashart';
 }
 
 export default function WinstreakDisplay({
@@ -22,12 +23,15 @@ export default function WinstreakDisplay({
   const [showConfirm, setShowConfirm] = useState(false);
   const championResetStats = useChampionStore((state) => state.resetAllStats);
   const proPlayerResetStats = useProPlayerStore((state) => state.resetAllStats);
+  const splashArtResetStats = useSplashArtStore((state) => state.resetAllStats);
 
   const handleReset = () => {
     if (mode === 'champions') {
       championResetStats();
-    } else {
+    } else if (mode === 'proplayers') {
       proPlayerResetStats();
+    } else {
+      splashArtResetStats();
     }
     setShowConfirm(false);
   };
