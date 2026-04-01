@@ -73,8 +73,26 @@ export function getChampionImageUrl(championId: string): string {
 }
 
 /**
- * Retourne l'URL du splash art d'un champion
+ * Retourne l'URL du splash art d'un champion (avec skin optionnel)
  */
-export function getChampionSplashUrl(championId: string): string {
-  return `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${championId}_0.jpg`;
+export function getChampionSplashUrl(championId: string, skinNum: number = 0): string {
+  return `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${championId}_${skinNum}.jpg`;
+}
+
+/**
+ * Récupère la liste des skins d'un champion
+ */
+export async function getChampionSkins(championId: string): Promise<{ num: number; name: string }[]> {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/data/en_US/champion/${championId}.json`
+    );
+    if (!response.ok) return [{ num: 0, name: 'default' }];
+    const data = await response.json();
+    const skins = data.data[championId]?.skins;
+    if (!skins || skins.length === 0) return [{ num: 0, name: 'default' }];
+    return skins.map((s: { num: number; name: string }) => ({ num: s.num, name: s.name }));
+  } catch {
+    return [{ num: 0, name: 'default' }];
+  }
 }

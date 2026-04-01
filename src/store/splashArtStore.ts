@@ -5,6 +5,8 @@ import { Champion } from '@/types/champion';
 interface SplashArtStore {
   // État du jeu
   currentChampion: Champion | null;
+  currentSkinNum: number;
+  currentSkinName: string;
   guessedChampionIds: string[];
   isGameWon: boolean;
   gaveUp: boolean;
@@ -17,7 +19,7 @@ interface SplashArtStore {
   totalWins: number;
 
   // Actions
-  setCurrentChampion: (champion: Champion) => void;
+  setCurrentChampion: (champion: Champion, skinNum?: number, skinName?: string) => void;
   addGuess: (champion: Champion) => void;
   resetGame: () => void;
   incrementWinstreak: () => void;
@@ -26,13 +28,15 @@ interface SplashArtStore {
   resetAllStats: () => void;
 }
 
-// Zoom levels: starts very zoomed in, progressively zooms out
-const ZOOM_LEVELS = [2.8, 2.6, 2.4, 2.2, 2.0, 1.8, 1.6, 1.4, 1.2, 1.0];
+// Zoom levels: starts at 350%, decreases by 20% each wrong guess
+const ZOOM_LEVELS = [3.5, 3.3, 3.1, 2.9, 2.7, 2.5, 2.3, 2.1, 1.9, 1.7, 1.5, 1.3, 1.1, 1.0];
 
 export const useSplashArtStore = create<SplashArtStore>()(
   persist(
     (set, get) => ({
       currentChampion: null,
+      currentSkinNum: 0,
+      currentSkinName: 'default',
       guessedChampionIds: [],
       isGameWon: false,
       gaveUp: false,
@@ -42,9 +46,11 @@ export const useSplashArtStore = create<SplashArtStore>()(
       totalGamesPlayed: 0,
       totalWins: 0,
 
-      setCurrentChampion: (champion) => {
+      setCurrentChampion: (champion, skinNum = 0, skinName = 'default') => {
         set({
           currentChampion: champion,
+          currentSkinNum: skinNum,
+          currentSkinName: skinName,
           guessedChampionIds: [],
           isGameWon: false,
           gaveUp: false,
@@ -87,6 +93,8 @@ export const useSplashArtStore = create<SplashArtStore>()(
         }
         set({
           currentChampion: null,
+          currentSkinNum: 0,
+          currentSkinName: 'default',
           guessedChampionIds: [],
           isGameWon: false,
           gaveUp: false,

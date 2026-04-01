@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { useSplashArtStore, ZOOM_LEVELS } from '@/store/splashArtStore';
 import { Champion } from '@/types/champion';
 import ChampionGuessInput from '@/components/champions/ChampionGuessInput';
-import { getChampionSplashUrl, getChampionImageUrl } from '@/utils/riotApi';
+import { getChampionSplashUrl, getChampionImageUrl, getChampionSkins } from '@/utils/riotApi';
 
 interface Props {
   champions: Champion[];
@@ -13,6 +13,8 @@ interface Props {
 export default function SplashArtGameBoard({ champions }: Props) {
   const {
     currentChampion,
+    currentSkinNum,
+    currentSkinName,
     guessedChampionIds,
     isGameWon,
     gaveUp,
@@ -26,28 +28,32 @@ export default function SplashArtGameBoard({ champions }: Props) {
   const [initialized, setInitialized] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
 
-  // Random origin for the zoom, stable per champion
+  // Random origin for the zoom, stable per champion + skin
   const zoomOrigin = useMemo(() => {
     if (!currentChampion) return { x: 50, y: 40 };
-    // Use champion key as seed for deterministic but varied position
-    const seed = parseInt(currentChampion.key, 10) || 0;
+    const seed = (parseInt(currentChampion.key, 10) || 0) + currentSkinNum;
     const x = 20 + (seed * 37 % 60); // 20-80%
     const y = 15 + (seed * 53 % 50); // 15-65%
     return { x, y };
-  }, [currentChampion]);
+  }, [currentChampion, currentSkinNum]);
 
-  const startNewGame = () => {
+  const startNewGame = async () => {
     const randomChamp = champions[Math.floor(Math.random() * champions.length)];
     resetGame();
-    setCurrentChampion(randomChamp);
+    const skins = await getChampionSkins(randomChamp.id);
+    const randomSkin = skins[Math.floor(Math.random() * skins.length)];
+    setCurrentChampion(randomChamp, randomSkin.num, randomSkin.name);
     setShowCelebration(false);
   };
 
   useEffect(() => {
     if (!initialized && !currentChampion && champions.length > 0) {
-      const randomChamp = champions[Math.floor(Math.random() * champions.length)];
-      setCurrentChampion(randomChamp);
       setInitialized(true);
+      const randomChamp = champions[Math.floor(Math.random() * champions.length)];
+      getChampionSkins(randomChamp.id).then((skins) => {
+        const randomSkin = skins[Math.floor(Math.random() * skins.length)];
+        setCurrentChampion(randomChamp, randomSkin.num, randomSkin.name);
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialized]);
@@ -78,7 +84,8 @@ export default function SplashArtGameBoard({ champions }: Props) {
   }
 
   const currentScale = ZOOM_LEVELS[zoomLevel];
-  const splashUrl = getChampionSplashUrl(currentChampion.id);
+  const splashUrl = getChampionSplashUrl(currentChampion.id, currentSkinNum);
+  const skinLabel = currentSkinName === 'default' ? currentChampion.name : currentSkinName;
 
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-8">
@@ -100,7 +107,7 @@ export default function SplashArtGameBoard({ champions }: Props) {
             <div className="flex justify-center">
               <img
                 src={splashUrl}
-                alt={currentChampion.name}
+                alt={skinLabel}
                 className="max-h-64 rounded-2xl border-2 border-white/30 shadow-xl"
               />
             </div>
@@ -111,6 +118,11 @@ export default function SplashArtGameBoard({ champions }: Props) {
                 <>You found <span className="font-bold text-yellow-300">{currentChampion.name}</span></>
               )}
             </p>
+            {currentSkinNum !== 0 && (
+              <p className="text-lg text-[#0AC8B9] drop-shadow-md">
+                Skin: {skinLabel}
+              </p>
+            )}
             <p className="text-xl text-gray-200 drop-shadow-md">
               {currentChampion.title}
             </p>
@@ -224,7 +236,7 @@ export default function SplashArtGameBoard({ champions }: Props) {
             <div className="text-center">
               <div className="text-3xl mb-2">🔍</div>
               <p className="font-bold text-sm">Zoomed In</p>
-              <p className="text-xs opacity-75">You see a small part of the splash art</p>
+              <p className="text-xs opacity-75">You see a small part of a splash art (could be any skin!)</p>
             </div>
             <div className="text-center">
               <div className="text-3xl mb-2">❌</div>
